@@ -1,0 +1,10 @@
+# analyzer output may contain your private request text — never commit it
+intents.txt
+/tmp/
+
+# python
+__pycache__/
+*.pyc
+
+# os
+.DS_Store

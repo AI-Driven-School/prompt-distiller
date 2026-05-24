@@ -34,7 +34,11 @@ def is_automation(text: str) -> bool:
             return True
     return False
 
-# --- intent buckets for hand-typed requests (multi-label). TUNE for your domain. -
+# --- intent buckets for hand-typed requests. TUNE for your domain. ---------------
+# Single-label assignment uses FIRST match, so order = priority. This is a HEURISTIC:
+# changing the order or keywords changes the numbers. Across reasonable settings the
+# robust finding is "research/investigation is the dominant hand-typed category" —
+# treat the exact counts as indicative, not exact.
 BUCKETS = {
     "research/explain": ("調べ", "リサーチ", "research", "分析", "調査", "比較", "教えて",
                           "とは", "どう思", "なぜ", "検討", "investigate", "competitor", "市場"),
@@ -45,14 +49,14 @@ BUCKETS = {
     "video/media":      ("動画", "video", "reel", "shorts", "youtube", "ffmpeg", "remotion",
                           "サムネ", "ナレーション", "thumbnail"),
     "data/scrape":      ("スクレイ", "収集", "クロール", "csv", "抽出", "リスト化", "scrape",
-                          "crawl", "extract", "一覧"),
+                          "crawl", "extract"),
     "review/audit":     ("レビュー", "確認して", "チェック", "監査", "診断", "評価", "review",
                           "audit", "見て"),
     "fix/debug":        ("エラー", "直し", "修正", "fix", "bug", "動かない", "落ちる", "バグ",
                           "原因", "失敗", "debug"),
     "deploy/infra":     ("デプロイ", "deploy", "本番", "公開して", "ビルド", "サーバ", "ssh",
-                          "cron", "docker", "ci"),
-    "test/qa":          ("テスト", "test", "qa", "網羅", "ケース", "coverage"),
+                          "cron", "docker", " ci "),
+    "test/qa":          ("テスト", "test", " qa", "網羅", "ケース", "coverage"),
     "strategy/biz":     ("戦略", "事業", "マネタイズ", "収益", "ビジネス", "参入", "撤退",
                           "構想", "アイデア", "strategy", "monetiz", "pricing"),
     "design/ui":        ("ui", "ux", "デザイン", "画面", "lp", "ランディング", "レイアウト",
@@ -118,25 +122,24 @@ def main():
     unmatched = []
     for t in human:
         tl = t.lower()
-        hits = [b for b, ks in BUCKETS.items() if any(k.lower() in tl for k in ks)]
-        if hits:
-            for b in hits:
-                assigned[b].append(t)
-        else:
-            unmatched.append(t)
+        # single-label: assign to the FIRST matching bucket (BUCKETS order = priority),
+        # so counts sum to the total and the leading intent is unambiguous.
+        bucket = next((b for b, ks in BUCKETS.items() if any(k.lower() in tl for k in ks)), None)
+        (assigned[bucket] if bucket is not None else unmatched).append(t)
 
-    print("\n=== intent distribution (multi-label) ===")
+    print("\n=== intent distribution (primary intent) ===")
     for b in sorted(assigned, key=lambda x: -len(assigned[x])):
         print(f"{len(assigned[b]):5d} | {b}")
     print(f"{len(unmatched):5d} | unmatched")
 
-    import random
-    random.seed(1)
-    print(f"\n=== {args.samples} samples per bucket ===")
-    for b in sorted(assigned, key=lambda x: -len(assigned[x])):
-        print(f"\n### {b}")
-        for s in random.sample(assigned[b], min(args.samples, len(assigned[b]))):
-            print("  -", s[:110])
+    if args.samples > 0:
+        import random
+        random.seed(1)
+        print(f"\n=== {args.samples} samples per bucket ===")
+        for b in sorted(assigned, key=lambda x: -len(assigned[x])):
+            print(f"\n### {b}")
+            for s in random.sample(assigned[b], min(args.samples, len(assigned[b]))):
+                print("  -", s[:110])
 
 
 if __name__ == "__main__":
