@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <rect x="0" y="0" width="760" height="300" rx="10" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="24" y="34" font-size="18" font-weight="700" fill="#111827">手で打った依頼 619件の用途分布 — 最頻はリサーチ</text>
+  <text x="24" y="54" font-size="12" fill="#6b7280">Claude Code履歴 2,927セッションを解析。自動エージェント由来の2,308件を除外した内訳。</text>
+
+  <!-- bars: scale 440px / 270 = 1.63 px/unit, bar area x:180..620 -->
+  <g font-size="13">
+    <!-- row 1 -->
+    <text x="165" y="86" text-anchor="end" fill="#1f2937">リサーチ→レポート</text>
+    <rect x="180" y="72" width="440" height="22" rx="3" fill="#2563eb"/>
+    <text x="628" y="86" font-size="12" font-weight="700" fill="#374151">270</text>
+    <!-- row 2 -->
+    <text x="165" y="118" text-anchor="end" fill="#1f2937">実装・構築</text>
+    <rect x="180" y="104" width="287" height="22" rx="3" fill="#3b82f6"/>
+    <text x="475" y="118" font-size="12" font-weight="700" fill="#374151">176</text>
+    <!-- row 3 -->
+    <text x="165" y="150" text-anchor="end" fill="#1f2937">コンテンツ再構成</text>
+    <rect x="180" y="136" width="262" height="22" rx="3" fill="#3b82f6"/>
+    <text x="450" y="150" font-size="12" font-weight="700" fill="#374151">161</text>
+    <!-- row 4 -->
+    <text x="165" y="182" text-anchor="end" fill="#1f2937">動画・メディア</text>
+    <rect x="180" y="168" width="244" height="22" rx="3" fill="#3b82f6"/>
+    <text x="432" y="182" font-size="12" font-weight="700" fill="#374151">150</text>
+    <!-- row 5 -->
+    <text x="165" y="214" text-anchor="end" fill="#1f2937">データ収集</text>
+    <rect x="180" y="200" width="243" height="22" rx="3" fill="#3b82f6"/>
+    <text x="431" y="214" font-size="12" font-weight="700" fill="#374151">149</text>
+    <!-- row 6 -->
+    <text x="165" y="246" text-anchor="end" fill="#1f2937">レビュー・監査</text>
+    <rect x="180" y="232" width="168" height="22" rx="3" fill="#60a5fa"/>
+    <text x="356" y="246" font-size="12" font-weight="700" fill="#374151">103</text>
+  </g>
+
+  <text x="24" y="284" font-size="11" fill="#9ca3af">「作る」より「調べて判断する」が多い。プロンプトを磨く前に、自分の最頻用途を知る。</text>
+</svg>
